@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {BaconService} from "../services/bacon-service";
+import {BaconService} from "./bacon-service";
 
 @Component({
 	templateUrl: "./templates/bacon.php"
