@@ -1,24 +1,15 @@
-import {Component, OnInit} from "@angular/core";
-import {BaconService} from "./bacon-service";
+import {Injectable} from "@angular/core";
+import {Http} from "@angular/http";
+import {Observable} from "rxjs/Observable";
 
-@Component({
-	templateUrl: "./templates/bacon.php"
-})
+@Injectable()
+export class BaconService {
+	constructor(protected http: Http) {}
 
-export class BaconComponent implements OnInit {
+	private baconUrl = "https://baconipsum.com/api/?type=meat-and-filler&paras=";
 
-	numParagraphs : number = 3;
-	paragraphs : string[] = [];
-
-	constructor(private baconService: BaconService) {}
-
-	ngOnInit() : void {
-		this.getBacon();
+	getBacon(paragraphs : number) : Observable<string[]> {
+		return(this.http.get(this.baconUrl + paragraphs)
+			.map(response => response.json()));
 	}
-
-	getBacon() : void {
-		this.baconService.getBacon(this.numParagraphs)
-			.subscribe(paragraphs => this.paragraphs = paragraphs);
-	}
-
 }
